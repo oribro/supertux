@@ -125,7 +125,14 @@ endif(WIN32)
 
 ## Add lots of dependencies to compiler switches
 
-set(Boost_ADDITIONAL_VERSIONS "1.41" "1.41.0")
+SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/Users/orib9/Documents/GitHub/boost_1_55_0")
+SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/Users/orib9/Documents/GitHub/boost_1_55_0/libs")
+FIND_PACKAGE(Boost)
+IF (Boost_FOUND)
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+    ADD_DEFINITIONS( "-DHAS_BOOST" )
+ENDIF()
+set(Boost_ADDITIONAL_VERSIONS "1.41" "1.41.0" "1.55.0")
 if(WIN32)
   option(ENABLE_BOOST_STATIC_LIBS "Use boost static libraries" ON)
 else(WIN32)
@@ -136,7 +143,6 @@ if(ENABLE_BOOST_STATIC_LIBS)
 else(ENABLE_BOOST_STATIC_LIBS)
   set(Boost_USE_STATIC_LIBS FALSE)
 endif(ENABLE_BOOST_STATIC_LIBS)
-find_package(Boost REQUIRED COMPONENTS filesystem system date_time locale)
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
